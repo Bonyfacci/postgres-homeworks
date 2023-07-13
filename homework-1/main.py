@@ -32,23 +32,6 @@ def main():
                             cursor.execute("INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)",
                                            (int(row[0]), row[1], row[2], row[3], row[4], row[5]))
 
-                # Заполнение таблицы заказов
-                with open(orders, 'r', encoding='utf8') as file:
-                    info = csv.reader(file, delimiter=",")
-                    count = 0
-                    for row in info:
-                        if count == 0:
-                            count += 1
-                            continue
-                        else:
-                            try:
-                                cursor.execute("INSERT INTO orders VALUES (%s, %s, %s, %s, %s)",
-                                           (int(row[0]), row[1], int(row[2]), row[3], row[4]))
-                                conn.commit()
-                            except psycopg2.DatabaseError:
-                                conn.rollback()
-                                continue
-
                 # Заполнение таблицы клиентов
                 with open(customers, 'r', encoding='utf8') as file:
                     info = csv.reader(file, delimiter=",")
@@ -61,6 +44,23 @@ def main():
                             try:
                                 cursor.execute("INSERT INTO customers VALUES (%s, %s, %s)",
                                                (row[0], row[1], row[2]))
+                                conn.commit()
+                            except psycopg2.DatabaseError:
+                                conn.rollback()
+                                continue
+
+                # Заполнение таблицы заказов
+                with open(orders, 'r', encoding='utf8') as file:
+                    info = csv.reader(file, delimiter=",")
+                    count = 0
+                    for row in info:
+                        if count == 0:
+                            count += 1
+                            continue
+                        else:
+                            try:
+                                cursor.execute("INSERT INTO orders VALUES (%s, %s, %s, %s, %s)",
+                                           (int(row[0]), row[1], int(row[2]), row[3], row[4]))
                                 conn.commit()
                             except psycopg2.DatabaseError:
                                 conn.rollback()
