@@ -45,3 +45,7 @@ SELECT * FROM student
 TRUNCATE TABLE student RESTART IDENTITY;
 
 SELECT * FROM student
+
+-- 8. Работа над ошибками: Для поля student_id при создании таблицы желательно указать
+-- ограничение PRIMARY KEY, т.к. поле является идентификатором.
+ALTER TABLE student ADD PRIMARY KEY (student_id)
