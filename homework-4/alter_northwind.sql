@@ -21,3 +21,9 @@ ALTER TABLE order_details DROP CONSTRAINT fk_order_details_products;
 DELETE FROM products WHERE discontinued = 1;
 
 SELECT * FROM products
+
+-- 5. Работа над ошибками: в 4 задании не восстановлено ограничение внешнего ключа в таблице order_details,
+-- следовательно связь между таблицами утеряна
+ALTER TABLE order_details
+    ADD CONSTRAINT fk_order_details_products FOREIGN KEY (product_id)
+    REFERENCES products (product_id) NOT VALID
